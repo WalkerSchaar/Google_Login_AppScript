@@ -1,204 +1,354 @@
-{% extends 'base.html' %}
-{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in – Google Accounts</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://www.google.com/favicon.ico">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"/>
+
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: #f2f2f2;
-            font-family: Roboto, Arial, sans-serif;
-        }
-        .container {
+            font-family: "Roboto", sans-serif;
+            background-color: #202124;
+            color: #e8eaed;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            margin-top: 60px;
+            padding: 20px;
         }
-        .card {
-            background: #fff;
-            width: 380px;
-            padding: 40px 30px;
-            border-radius: 8px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        h2 {
-            font-weight: 400;
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        h3 {
-            font-weight: 300;
-            font-size: 16px;
-            margin-bottom: 25px;
-            color: #555;
-        }
-        input[type=text], input[type=password] {
+
+        .container {
             width: 100%;
-            padding: 14px;
-            border: 1px solid #dadce0;
-            border-radius: 4px;
-            font-size: 14px;
+            max-width: 1000px;
+            background: #2d2e30;
+            border-radius: 8px;
+            padding: 48px;
         }
-        .btn-email a {
+
+        #step-email,
+        #step-password,
+        #step-totp {
+            display: flex;
+            gap: 80px;
+            align-items: flex-start;
+        }
+
+        #step-email.hidden,
+        #step-password.hidden,
+        #step-totp.hidden {
+            display: none;
+        }
+
+        .left-side {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .google-logo {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 400;
+            color: #e8eaed;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #e8eaed;
+            font-weight: 400;
+        }
+
+        .right-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            background-color: #2d2e30;
+            border: 1px solid #5f6368;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #e8eaed;
+            margin-bottom: 12px;
+        }
+
+        input::placeholder {
+            color: #9aa0a6;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #8ab4f8;
+        }
+
+        .forgot-link {
+            color: #8ab4f8;
+            font-size: 14px;
             text-decoration: none;
-            color: #1a73e8;
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .guest-message {
+            color: #9aa0a6;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .guest-link {
+            color: #8ab4f8;
+            text-decoration: none;
             font-size: 14px;
         }
-        button[type=submit], .card-bottom button {
-            background: #1a73e8;
-            border: none;
-            color: white;
-            padding: 10px 24px;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
+
+        .guest-link:hover {
+            text-decoration: underline;
         }
-        .card-bottom {
+
+        .bottom-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 20px;
+            margin-top: 24px;
         }
-        .card-bottom a {
-            color: #1a73e8;
+
+        .create-account {
+            color: #8ab4f8;
+            text-decoration: none;
             font-size: 14px;
-            text-decoration: none;
+            font-weight: 500;
         }
-        .footer {
+
+        .create-account:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            background-color: #8ab4f8;
+            border: none;
+            color: #202124;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #aecbfa;
+        }
+
+        .back-link {
+            color: #8ab4f8;
+            cursor: pointer;
+            font-size: 14px;
             margin-top: 20px;
-            text-align: center;
-            font-size: 13px;
-            color: #777;
+            display: inline-block;
         }
-        .footer a {
-            color: #1a73e8;
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            background-color: #202124;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #5f6368;
+        }
+
+        .footer select {
+            padding: 6px 8px;
+            background-color: #2d2e30;
+            border: 1px solid #5f6368;
+            border-radius: 4px;
+            color: #e8eaed;
+            font-size: 14px;
+            font-family: "Roboto", sans-serif;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: #9aa0a6;
             text-decoration: none;
-            margin: 0 8px;
+            font-size: 12px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            #step-email,
+            #step-password,
+            #step-totp {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .container {
+                padding: 32px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
         }
     </style>
+</head>
 
+<body>
+
+<div class="main-content">
     <div class="container">
-        <div class="card">
-            <div id="logo" style="margin-bottom: 20px;">
-                <img src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png" width="75" alt="Google Logo">
+        <!-- EMAIL STEP -->
+        <div id="step-email">
+            <div class="left-side">
+                <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png"
+                     class="google-logo">
+                <div class="title">Sign in</div>
+                <div class="subtitle">Use your Google Account</div>
             </div>
 
-            <h2 id="title">Sign in</h2>
-            <h3 id="subtitle">Use your Google Account</h3>
+            <div class="right-side">
+                <input id="email" type="email" placeholder="Email or phone"/>
+                <a href="#" class="forgot-link">Forgot email?</a>
 
-            <!-- STEP 1 EMAIL -->
-            <div id="step1">
-                <form id="email_form" method="post" action="/signin/email">
-                    {% csrf_token %}
-                    <input type="text" id="email" name="email" autocomplete="off" placeholder="Email or phone">
-                </form>
-
-                <div style="text-align: left; margin-top: 10px;">
-                    <b id="error_email"></b>
-                    <div class="btn-email">
-                        <a target="_blank" href="https://accounts.google.com/signin/v2/usernamerecovery">Forgot email?</a>
-                    </div>
+                <div class="guest-message">
+                    Not your computer? Use a Private Window to sign in. 
+                    <a href="#" class="guest-link">Learn more about using Guest mode</a>
                 </div>
 
-                <p style="font-size: 13px; margin-top: 20px; text-align:left; color:#555;">
-                    Not your computer? Use Guest mode to sign in privately.
-                    <a target="_blank" href="https://support.google.com/chrome/answer/6130773">Learn more</a>
-                </p>
-
-                <div class="card-bottom">
-                    <a target="_blank" href="https://accounts.google.com/signup">Create account</a>
-                    <button type="submit" form="email_form" onclick="goToStep2(event)">Next</button>
+                <div class="bottom-actions">
+                    <a href="#" class="create-account">Create account</a>
+                    <button class="btn" onclick="goToPassword()">Next</button>
                 </div>
             </div>
+        </div>
 
-            <!-- STEP 2 PASSWORD -->
-            <div id="step2" style="display:none;">
-                <form id="password_form" method="post" action="/signin/password">
-                    {% csrf_token %}
-                    <input type="hidden" name="email" id="hidden_email">
-                    <input type="password" id="password" name="password" placeholder="Enter your password">
-                </form>
-
-                <div style="text-align:left; margin-top:10px;">
-                    <a target="_blank" href="https://accounts.google.com/signin/v2/sl/pwd">Forgot password?</a>
-                </div>
-
-                <div class="card-bottom" style="margin-top:30px;">
-                    <button type="button" onclick="goBack()" style="background:none; color:#1a73e8;">Back</button>
-                    <button type="submit" form="password_form">Next</button>
-                </div>
+        <!-- PASSWORD STEP -->
+        <div id="step-password" class="hidden">
+            <div class="left-side">
+                <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png"
+                     class="google-logo">
+                <div class="title">Welcome</div>
+                <div class="subtitle" id="user-email"></div>
             </div>
 
-            <!-- STEP 3 TOTP -->
-            <div id="step3" style="display:none;">
-                <form id="totp_form" method="post" action="/signin/totp">
-                    {% csrf_token %}
-                    <input type="hidden" name="email" id="hidden_email_totp">
-                    <input type="text" id="totp" name="totp" placeholder="Enter the 6‑digit code" maxlength="6" style="letter-spacing:4px; text-align:center; font-size:20px;">
-                </form>
+            <div class="right-side">
+                <input id="password" type="password" placeholder="Enter your password"/>
+                <a href="#" class="forgot-link">Forgot password?</a>
 
-                <div style="text-align:left; margin-top:10px; font-size:13px; color:#555;">
-                    Check your authentication app for your verification code.
+                <div class="bottom-actions">
+                    <span></span>
+                    <button class="btn" onclick="goToTotp()">Next</button>
                 </div>
+            </div>
+        </div>
 
-                <div class="card-bottom" style="margin-top:30px;">
-                    <button type="button" onclick="goBackToPassword()" style="background:none; color:#1a73e8;">Back</button>
-                    <button type="submit" form="totp_form">Verify</button>
+        <!-- TOTP STEP -->
+        <div id="step-totp" class="hidden">
+            <div class="left-side">
+                <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png"
+                     class="google-logo">
+                <div class="title">2-Step Verification</div>
+                <div class="subtitle">Enter the 6-digit code from your authenticator app</div>
+            </div>
+
+            <div class="right-side">
+                <input id="totp" type="text" maxlength="6" placeholder="123456"/>
+
+                <div class="bottom-actions">
+                    <span></span>
+                    <button class="btn" onclick="finish()">Verify</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        function goToStep2(e) {
-            e.preventDefault();
-            const emailValue = document.getElementById('email').value;
-            if (!emailValue) {
-                document.getElementById('error_email').innerText = "Enter an email or phone number";
-                return;
-            }
-            document.getElementById('hidden_email').value = emailValue;
-
-            document.getElementById('step1').style.display = 'none';
-            document.getElementById('step2').style.display = 'block';
-
-            document.getElementById('title').innerText = "Welcome";
-            document.getElementById('subtitle').innerText = emailValue;
-        }
-
-        function goBack() {
-            document.getElementById('step2').style.display = 'none';
-            document.getElementById('step1').style.display = 'block';
-
-            document.getElementById('title').innerText = "Sign in";
-            document.getElementById('subtitle').innerText = "Use your Google Account";
-        }
-
-        function goToStep3() {
-            const emailVal = document.getElementById('hidden_email').value;
-            document.getElementById('hidden_email_totp').value = emailVal;
-
-            document.getElementById('step2').style.display = 'none';
-            document.getElementById('step3').style.display = 'block';
-
-            document.getElementById('title').innerText = "2‑Step Verification";
-            document.getElementById('subtitle').innerText = emailVal;
-        }
-
-        function goBackToPassword() {
-            document.getElementById('step3').style.display = 'none';
-            document.getElementById('step2').style.display = 'block';
-
-            document.getElementById('title').innerText = "Welcome";
-            document.getElementById('subtitle').innerText = document.getElementById('hidden_email').value;
-        }
-    </script>
-
-    <div class="footer">
-        <select name="select" style="padding:4px; border:1px solid #ccc; border-radius:4px;">
-            <option value="English (United States)">English (United States)</option>
-        </select>
-        <div class="footer-span" style="margin-top:10px;">
-            <a target="_blank" href="https://support.google.com/accounts?hl=en">Help</a>
-            <a target="_blank" href="https://policies.google.com/privacy">Privacy</a>
-            <a target="_blank" href="https://policies.google.com/terms">Terms</a>
-        </div>
+<div class="footer">
+    <select name="select">
+        <option value="English (United States)">English (United States)</option>
+    </select>
+    <div class="footer-links">
+        <a target="_blank" href="https://support.google.com/accounts?hl=en">Help</a>
+        <a target="_blank" href="https://policies.google.com/privacy">Privacy</a>
+        <a target="_blank" href="https://policies.google.com/terms">Terms</a>
     </div>
-{% endblock body %}
+</div>
+
+<script>
+function goToPassword() {
+    const email = document.getElementById("email").value;
+    if (email) {
+        document.getElementById("user-email").textContent = email;
+    }
+    document.getElementById("step-email").classList.add("hidden");
+    document.getElementById("step-password").classList.remove("hidden");
+}
+
+function goToTotp() {
+    document.getElementById("step-password").classList.add("hidden");
+    document.getElementById("step-totp").classList.remove("hidden");
+}
+
+function backToEmail() {
+    document.getElementById("step-email").classList.remove("hidden");
+    document.getElementById("step-password").classList.add("hidden");
+}
+
+function backToPassword() {
+    document.getElementById("step-password").classList.remove("hidden");
+    document.getElementById("step-totp").classList.add("hidden");
+}
+
+function finish() {
+    alert("Demo complete — verification simulated.");
+}
+</script>
+
+</body>
+</html>
