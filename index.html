@@ -20,11 +20,18 @@
 
         body {
             font-family: "Roboto", sans-serif;
-            background-color: #202124;
-            color: #e8eaed;
+            background-color: #f0f4f9;
+            color: #202124;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #202124;
+                color: #e8eaed;
+            }
         }
 
         .main-content {
@@ -37,18 +44,23 @@
 
         .container {
             width: 100%;
-            max-width: 1000px;
-            background: #2d2e30;
+            max-width: 450px;
+            background: #fff;
             border-radius: 8px;
-            padding: 48px;
+            padding: 48px 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: #2d2e30;
+            }
         }
 
         #step-email,
         #step-password,
         #step-totp {
-            display: flex;
-            gap: 80px;
-            align-items: flex-start;
+            display: block;
         }
 
         #step-email.hidden,
@@ -60,6 +72,7 @@
         .left-side {
             flex: 1;
             min-width: 300px;
+            margin-bottom: 32px;
         }
 
         .google-logo {
@@ -69,16 +82,28 @@
         }
 
         .title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 400;
-            color: #e8eaed;
+            color: #202124;
             margin-bottom: 8px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .title {
+                color: #e8eaed;
+            }
         }
 
         .subtitle {
             font-size: 16px;
-            color: #e8eaed;
+            color: #202124;
             font-weight: 400;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .subtitle {
+                color: #e8eaed;
+            }
         }
 
         .right-side {
@@ -90,25 +115,42 @@
         input {
             width: 100%;
             padding: 14px 16px;
-            background-color: #2d2e30;
-            border: 1px solid #5f6368;
+            background-color: #fff;
+            border: 1px solid #dadce0;
             border-radius: 4px;
             font-size: 16px;
-            color: #e8eaed;
+            color: #202124;
             margin-bottom: 12px;
         }
 
         input::placeholder {
-            color: #9aa0a6;
+            color: #5f6368;
         }
 
         input:focus {
             outline: none;
-            border-color: #8ab4f8;
+            border-color: #1a73e8;
+            border-width: 2px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            input {
+                background-color: #2d2e30;
+                border-color: #5f6368;
+                color: #e8eaed;
+            }
+
+            input::placeholder {
+                color: #9aa0a6;
+            }
+
+            input:focus {
+                border-color: #8ab4f8;
+            }
         }
 
         .forgot-link {
-            color: #8ab4f8;
+            color: #1a73e8;
             font-size: 14px;
             text-decoration: none;
             margin-bottom: 24px;
@@ -119,20 +161,63 @@
             text-decoration: underline;
         }
 
+        @media (prefers-color-scheme: dark) {
+            .forgot-link {
+                color: #8ab4f8;
+            }
+        }
+
+        .show-password {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .show-password input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .show-password label {
+            cursor: pointer;
+            color: #5f6368;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .show-password label {
+                color: #9aa0a6;
+            }
+        }
+
         .guest-message {
-            color: #9aa0a6;
+            color: #5f6368;
             font-size: 14px;
             margin-bottom: 4px;
         }
 
+        @media (prefers-color-scheme: dark) {
+            .guest-message {
+                color: #9aa0a6;
+            }
+        }
+
         .guest-link {
-            color: #8ab4f8;
+            color: #1a73e8;
             text-decoration: none;
             font-size: 14px;
         }
 
         .guest-link:hover {
             text-decoration: underline;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .guest-link {
+                color: #8ab4f8;
+            }
         }
 
         .bottom-actions {
@@ -143,7 +228,7 @@
         }
 
         .create-account {
-            color: #8ab4f8;
+            color: #1a73e8;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
@@ -153,11 +238,17 @@
             text-decoration: underline;
         }
 
+        @media (prefers-color-scheme: dark) {
+            .create-account {
+                color: #8ab4f8;
+            }
+        }
+
         .btn {
             padding: 10px 24px;
-            background-color: #8ab4f8;
+            background-color: #1a73e8;
             border: none;
-            color: #202124;
+            color: #fff;
             font-size: 14px;
             font-weight: 500;
             border-radius: 20px;
@@ -165,7 +256,18 @@
         }
 
         .btn:hover {
-            background-color: #aecbfa;
+            background-color: #1765cc;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .btn {
+                background-color: #8ab4f8;
+                color: #202124;
+            }
+
+            .btn:hover {
+                background-color: #aecbfa;
+            }
         }
 
         .back-link {
@@ -181,22 +283,36 @@
         }
 
         .footer {
-            background-color: #202124;
+            background-color: #f0f4f9;
             padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #5f6368;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .footer {
+                background-color: #202124;
+            }
         }
 
         .footer select {
             padding: 6px 8px;
-            background-color: #2d2e30;
-            border: 1px solid #5f6368;
+            background-color: transparent;
+            border: none;
             border-radius: 4px;
-            color: #e8eaed;
+            color: #5f6368;
             font-size: 14px;
             font-family: "Roboto", sans-serif;
+            cursor: pointer;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .footer select {
+                background-color: transparent;
+                border: none;
+                color: #9aa0a6;
+            }
         }
 
         .footer-links {
@@ -205,13 +321,19 @@
         }
 
         .footer-links a {
-            color: #9aa0a6;
+            color: #5f6368;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         .footer-links a:hover {
             text-decoration: underline;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .footer-links a {
+                color: #9aa0a6;
+            }
         }
 
         .hidden {
@@ -222,12 +344,11 @@
             #step-email,
             #step-password,
             #step-totp {
-                flex-direction: column;
-                gap: 40px;
+                display: block;
             }
 
             .container {
-                padding: 32px;
+                padding: 32px 24px;
             }
 
             .footer {
@@ -279,6 +400,12 @@
 
             <div class="right-side">
                 <input id="password" type="password" placeholder="Enter your password"/>
+                
+                <div class="show-password">
+                    <input type="checkbox" id="showPassword" onclick="togglePassword()"/>
+                    <label for="showPassword">Show password</label>
+                </div>
+
                 <a href="#" class="forgot-link">Forgot password?</a>
 
                 <div class="bottom-actions">
@@ -294,11 +421,19 @@
                 <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png"
                      class="google-logo">
                 <div class="title">2-Step Verification</div>
-                <div class="subtitle">Enter the 6-digit code from your authenticator app</div>
+                <div class="subtitle">A text message with a 6-digit verification code was just sent to your phone</div>
             </div>
 
             <div class="right-side">
-                <input id="totp" type="text" maxlength="6" placeholder="123456"/>
+                <div style="position: relative;">
+                    <span style="position: absolute; left: 16px; top: 15px; color: #5f6368; font-size: 16px; font-weight: 400;">G-</span>
+                    <input id="totp" type="text" maxlength="6" placeholder="123456" style="padding-left: 40px;"/>
+                </div>
+
+                <div class="show-password">
+                    <input type="checkbox" id="dontAskAgain"/>
+                    <label for="dontAskAgain">Don't ask again on this device</label>
+                </div>
 
                 <div class="bottom-actions">
                     <span></span>
@@ -328,6 +463,17 @@ function goToPassword() {
     }
     document.getElementById("step-email").classList.add("hidden");
     document.getElementById("step-password").classList.remove("hidden");
+}
+
+function togglePassword() {
+    const passwordInput = document.getElementById("password");
+    const checkbox = document.getElementById("showPassword");
+    
+    if (checkbox.checked) {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
 }
 
 function goToTotp() {
